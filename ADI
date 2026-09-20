@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap");
+.social-wrapper {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  z-index: 9999;
+  font-family: "Outfit", sans-serif;
+}
+.social-menu {
+  position: absolute;
+  right: 0;
+  bottom: 85px;
+  width: 275px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform-origin: bottom right;
+  transform: scale(0.8) translateY(20px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.social-menu.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+}
+.social-option {
+  min-height: 74px;
+  box-sizing: border-box;
+  padding: 8px 12px 8px 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #1e293b;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+.social-option:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  background: #ffffff;
+}
+.social-icon {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #ffffff;
+  overflow: hidden;
+  z-index: 1;
+}
+.social-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 3px;
+  background: conic-gradient(from 0deg, #3b82f6, #ff0844, #f1c40f, #3b82f6);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 10;
+  animation: spinRing 3s linear infinite;
+  pointer-events: none;
+}
+@keyframes spinRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.social-icon img {
+  width: 50px !important;
+  height: 50px !important;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+.social-option:hover .social-icon img {
+  transform: scale(1.1) rotate(5deg);
+}
+.social-option:nth-child(3) .social-icon img,
+.social-option:nth-child(4) .social-icon img {
+  transform: scale(1.45);
+}
+.social-option:nth-child(3):hover .social-icon img,
+.social-option:nth-child(4):hover .social-icon img {
+  transform: scale(1.55) rotate(5deg);
+}
+.social-copy {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.social-copy strong {
+  display: block;
+  color: #0f172a;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+.social-copy small {
+  display: block;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+}
+.social-arrow {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: grid;
+  place-items: center;
+  color: #94a3b8;
+  background: #f1f5f9;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+.social-option:hover .social-arrow {
+  color: #ffffff;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  transform: rotate(45deg);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+.whatsapp-float {
+  position: relative;
+  width: 65px;
+  height: 65px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: float-pulse 2.5s infinite;
+}
+@keyframes float-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(15, 23, 42, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(15, 23, 42, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(15, 23, 42, 0);
+  }
+}
+.whatsapp-float:hover {
+  transform: translateY(-5px) scale(1.05);
+}
+.whatsapp-float img {
+  position: relative;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  display: block;
+  object-fit: contain;
+  transition: all 0.4s ease;
+}
+.whatsapp-float.active {
+  background: linear-gradient(135deg, #ff0844, #ffb199);
+  box-shadow: 0 10px 25px rgba(255, 8, 68, 0.4);
+  animation: none;
+  transform: rotate(180deg);
+}
+.whatsapp-float.active img {
+  opacity: 0;
+  transform: scale(0) rotate(90deg);
+}
+.float-close {
+  position: absolute;
+  z-index: 3;
+  width: 30px;
+  height: 30px;
+  opacity: 0;
+  transform: rotate(-90deg) scale(0);
+  transition: all 0.4s ease;
+}
+.float-close::before,
+.float-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 3px;
+  border-radius: 5px;
+  background: #ffffff;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.float-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.whatsapp-float.active .float-close {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+.float-ripple,
+.float-ring {
+  display: none;
+}
+@media (max-width: 480px) {
+  .social-wrapper {
+    right: 15px;
+    bottom: 20px;
+  }
+  .social-menu {
+    bottom: 75px;
+    width: 260px;
+  }
+  .social-icon {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+  }
+  .social-icon img {
+    width: 42px !important;
+    height: 42px !important;
+  }
+  .whatsapp-float {
+    width: 58px;
+    height: 58px;
+  }
+  .whatsapp-float img {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+    </style>
+</head>
+<body>
+
+    <h1>Coming Soon</h1>
+
+    <!-- Floating Social Menu -->
+<div class="social-wrapper">
+    <div class="social-menu" id="socialMenu" aria-label="Social links">
+        
+        <a href="https://chat.whatsapp.com/DAW1RXPlHpxAGCE49SBDtz" target="_blank" rel="noopener noreferrer" class="social-option">
+            <span class="social-icon"><img src="/MAIN/Img/BCAOL.png" alt="WhatsApp - BCA New OL"></span>
+            <span class="social-copy"><strong>BCA_NEW OL</strong><small>WhatsApp Group</small></span>
+            <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+        
+        <a href="https://chat.whatsapp.com/ELXP3dUUZY1BF2nuel3TDt" target="_blank" rel="noopener noreferrer" class="social-option">
+            <span class="social-icon"><img src="/MAIN/Img/BCAODL.png" alt="WhatsApp - BCA New ODL"></span>
+            <span class="social-copy"><strong>BCA_NEW ODL</strong><small>WhatsApp Group</small></span>
+            <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+        
+        <a href="https://www.youtube.com/@BCA_WITH_ADI" target="_blank" rel="noopener noreferrer" class="social-option">
+            <span class="social-icon"><img src="/MAIN/Img/YOUTUBE.png" alt="YouTube"></span>
+            <span class="social-copy"><strong>YouTube</strong><small>Watch latest videos</small></span>
+            <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+        
+        <a href="https://www.instagram.com/bcawithadi/" target="_blank" rel="noopener noreferrer" class="social-option">
+            <span class="social-icon"><img src="/MAIN/Img/INSTAGRAM.png" alt="Instagram"></span>
+            <span class="social-copy"><strong>Instagram</strong><small>Follow for updates</small></span>
+            <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <!-- NAYA SHARE BUTTON (100% SECURE) -->
+        <a href="#" id="shareAppBtn" class="social-option">
+            <span class="social-icon">
+                <span style="display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; font-size: 26px; z-index: 2; position: relative;">📤</span>
+            </span>
+            <span class="social-copy"><strong>Share App</strong><small>Send to BCA Friends</small></span>
+            <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+        
+    </div>
+    
+    <button class="whatsapp-float" id="socialButton" type="button" aria-label="Open social links" aria-expanded="false" aria-controls="socialMenu">
+        <span class="float-ripple" aria-hidden="true"></span>
+        <span class="float-ring" aria-hidden="true"></span>
+        <img src="/MAIN/Img/PLUS.png" alt="" aria-hidden="true">
+        <span class="float-close" aria-hidden="true"></span>
+    </button>
+</div>
+    
+
+        <script>
+                const button = document.getElementById("socialButton");
+        const menu = document.getElementById("socialMenu");
+
+        function setMenuState(open) {
+            menu.classList.toggle("show", open);
+            button.classList.toggle("active", open);
+            button.setAttribute("aria-expanded", String(open));
+            button.setAttribute("aria-label", open ? "Close social links" : "Open social links");
+        }
+
+        button.addEventListener("click", function (event) {
+            event.stopPropagation();
+            setMenuState(!menu.classList.contains("show"));
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!event.target.closest(".social-wrapper")) {
+                setMenuState(false);
+            }
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                setMenuState(false);
+            }
+        });
+
+const shareAppBtn = document.getElementById("shareAppBtn");
+
+if (shareAppBtn) {
+    shareAppBtn.addEventListener("click", async function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const shareData = {
+            title: document.title || "BCA With Adi",
+            text: "BCA students ke liye useful website. Check it out!",
+            url: window.location.href
+        };
+
+        try {
+            if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+                await navigator.share(shareData);
+            } else if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                alert("Native sharing is not supported in this browser.");
+            }
+        } catch (error) {
+            if (error.name !== "AbortError") {
+                console.error("Share failed:", error);
+            }
+        }
+    });
+}
+    </script>
+</body>
+</html>
