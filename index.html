@@ -319,7 +319,7 @@
     
 
         <script>
-                const button = document.getElementById("socialButton");
+        const button = document.getElementById("socialButton");
         const menu = document.getElementById("socialMenu");
 
         function setMenuState(open) {
@@ -346,34 +346,40 @@
             }
         });
 
-const shareAppBtn = document.getElementById("shareAppBtn");
 
-if (shareAppBtn) {
-    shareAppBtn.addEventListener("click", async function (event) {
-        event.preventDefault();
-        event.stopPropagation();
+// ==========================================
+// 3. SECURE SHARE APP FUNCTION (WITH LOCALHOST DEBUGGING)
+// ==========================================
+document.body.addEventListener('click', function(e) {
+    const shareBtn = e.target.closest('#shareAppBtn');
+    
+    if (shareBtn) {
+        e.preventDefault(); 
+        console.log("Share Button Clicked!"); // Localhost check ke liye
+        
+        const sTitle = "IGNOU BCA_NEW All-in-One Hub 🚀";
+        const sText = "🔥 IGNOU BCA Students! \nFree Solved Assignments, Study Notes, PYQs, aur Exam Updates (Sem 1 to 6) sab ek hi jagah. \n\nEk baar ye portal check karo, 100% help hogi! 👇\n";
+        const sUrl = "https://bca-with-adi.web.app/";
 
-        const shareData = {
-            title: document.title || "BCA With Adi",
-            text: "BCA students ke liye useful website. Check it out!",
-            url: window.location.href
-        };
-
-        try {
-            if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
-                await navigator.share(shareData);
-            } else if (navigator.share) {
-                await navigator.share(shareData);
-            } else {
-                alert("Native sharing is not supported in this browser.");
-            }
-        } catch (error) {
-            if (error.name !== "AbortError") {
-                console.error("Share failed:", error);
+        // Try using native share (Will work on Mobile/Firebase Live)
+        if (navigator.share) {
+            navigator.share({
+                title: sTitle,
+                text: sText,
+                url: sUrl
+            }).catch(err => console.log('Share canceled by user:', err));
+        } else {
+            // Fallback for PC / Localhost (Copy to Clipboard)
+            try {
+                navigator.clipboard.writeText(sText + sUrl).then(() => {
+                    alert("🔗 Link Copy ho gaya hai! (PC / Localhost Mode)");
+                });
+            } catch (err) {
+                alert("Browser ne clipboard block kar diya. Live website par kaam karega!");
             }
         }
-    });
-}
+    }
+});
     </script>
 </body>
 </html>
