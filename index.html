@@ -346,6 +346,50 @@
             }
         });
 
+// --- UNIVERSAL FLOATING BACK BUTTON (ONLY FOR PC/LAPTOP/TV) ---
+window.addEventListener('DOMContentLoaded', () => {
+    
+    // Check karein ki screen badi hai ya nahi (PC/Laptop/TV - Greater than 1024px)
+    if (window.innerWidth > 1024) {
+        
+        // Check karein ki user Home page par toh nahi hai
+        const currentPath = window.location.pathname.toUpperCase();
+        const isHomePage = currentPath.endsWith('INDEX.HTML') || currentPath === '/' || currentPath.endsWith('/MAIN/');
+
+        if (!isHomePage) {
+            let backBtn = document.createElement('button');
+            backBtn.id = 'universalBackBtn';
+            backBtn.innerHTML = '⬅ Back';
+            backBtn.style.cssText = `
+                position: fixed; 
+                bottom: 30px; 
+                left: 30px; 
+                background: linear-gradient(135deg, #0052d4, #4364f7); 
+                color: #ffffff; 
+                border: 2px solid white;
+                padding: 12px 24px; 
+                border-radius: 30px; 
+                font-weight: bold; 
+                font-size: 16px;
+                cursor: pointer; 
+                z-index: 999999; 
+                box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+                transition: transform 0.2s ease;
+            `;
+
+            backBtn.addEventListener('mouseenter', () => backBtn.style.transform = 'scale(1.08)');
+            backBtn.addEventListener('mouseleave', () => backBtn.style.transform = 'scale(1)');
+            
+            // Sirf ek step peeche jane ka command (No direct home redirect)
+            backBtn.onclick = () => {
+                window.history.back();
+            };
+            
+            document.body.appendChild(backBtn);
+        }
+    }
+});
+
 
 // ==========================================
 // 3. SECURE SHARE APP FUNCTION (WITH LOCALHOST DEBUGGING)
